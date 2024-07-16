@@ -104,21 +104,11 @@ const LoginPage = () => {
 
               {/* password */}
               <div className='grid gap-2'>
-                <div className='flex justify-between items-center'>
-                  <Label
-                    htmlFor='password'
-                    className='text-[16px] uppercase'>
-                    Password
-                  </Label>
-
-                  <Link to='/forget-password'>
-                    <div className='text-[16px]'>
-                      <button className='underline text-blue-500'>
-                        Forgot Password?
-                      </button>
-                    </div>
-                  </Link>
-                </div>
+                <Label
+                  htmlFor='password'
+                  className='text-[16px] uppercase'>
+                  Password
+                </Label>
                 <div className='relative'>
                   <Input
                     id='password'
@@ -161,6 +151,16 @@ const LoginPage = () => {
               to='/register'
               className='underline'>
               Register
+            </Link>
+          </div>
+
+          <div className="mt-2 text-center">
+            <Link to='/forget-password'>
+              <div className='text-[16px]'>
+                <button className='underline text-blue-500'>
+                  Forgot Password?
+                </button>
+              </div>
             </Link>
           </div>
         </CardContent>

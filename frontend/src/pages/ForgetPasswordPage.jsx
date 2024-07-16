@@ -21,7 +21,7 @@ const validationSchema = Yup.object({
 });
 
 const ForgetPasswordPage = () => {
-  const { status } = useSelector((state) => state.auth.status); // Assuming authSlice is correctly configured in Redux
+  const { status, error } = useSelector((state) => state.auth); // Assuming authSlice is correctly configured in Redux
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -33,10 +33,14 @@ const ForgetPasswordPage = () => {
       dispatch(sendPasswordResetEmail(values.email))
         .unwrap()
         .then((response) => {
-          toast.success(response.message, { autoClose: 1000 });
+          toast.success(response.message || "Reset email sent successfully", {
+            autoClose: 1000,
+          });
         })
         .catch((error) => {
-          toast.error(error.message || "Failed to send reset email.", { autoClose: 1000 });
+          toast.error(error.message || "Failed to send reset email.", {
+            autoClose: 1000,
+          });
         });
     },
   });
@@ -86,6 +90,10 @@ const ForgetPasswordPage = () => {
               </Button>
             </div>
           </form>
+
+          {error && (
+            <div className='mt-4 text-center text-red-600'>{error}</div>
+          )}
 
           <div className='mt-4 text-center text-[16px]'>
             <Link

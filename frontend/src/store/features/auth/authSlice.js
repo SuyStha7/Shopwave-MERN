@@ -51,18 +51,15 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
-// Send password reset email thunk
 export const sendPasswordResetEmail = createAsyncThunk(
   "auth/sendPasswordResetEmail",
-  async ({ token, newPassword }, thunkAPI) => {
+  async (email, thunkAPI) => {
     try {
-      const response = await authService.sendPasswordResetEmail(
-        token,
-        newPassword
-      );
-      return response;
+      const response = await authService.sendPasswordResetEmail(email);
+      return response.data; // Assuming the API returns a response with a `data` property
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      // Handle error and return a rejected action with error message
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );

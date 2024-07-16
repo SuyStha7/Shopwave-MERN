@@ -69,7 +69,7 @@ const CartPage = () => {
     <div className='min-h-screen bg-gray-100 py-10'>
       <div className='container mx-auto px-4'>
         <div className='flex flex-col md:flex-row gap-8'>
-          <div className='w-full md:w-2/3 flex flex-col gap-3 bg-white rounded-lg shadow-lg p-6 lg:h-[350px]'>
+          <div className='w-full md:w-2/3 flex flex-col gap-3 bg-white rounded-lg shadow-lg p-6'>
             <div className='flex items-center justify-between font-semibold'>
               <h1 className='text-3xl py-5'>Your Cart Items</h1>
               <p className='text-gray-800 text-[18px]'>

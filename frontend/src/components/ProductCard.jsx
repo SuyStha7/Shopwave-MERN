@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "@/store/features/cart/cartSlice";
 import { ShoppingCart } from "lucide-react";
+import formatNumber from "format-number";
 
 const ProductCard = ({ prod }) => {
   const [showModal, setShowModal] = useState(false);
@@ -22,14 +23,6 @@ const ProductCard = ({ prod }) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-  };
-
-  const formatCurrency = (num) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "NPR",
-      minimumFractionDigits: 2,
-    }).format(num);
   };
 
   if (!prod) {
@@ -126,7 +119,7 @@ const ProductCard = ({ prod }) => {
 
             <div className='flex justify-between mt-3 '>
               <p className='text-gray-600 font-semibold text-xl'>
-                {formatCurrency(prod.price)}
+                {formatNumber({prefix: "Rs."})(prod.price)}
               </p>
 
               <div>
