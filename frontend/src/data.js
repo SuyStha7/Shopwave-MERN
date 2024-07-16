@@ -1,3 +1,18 @@
+export const catImages = [
+  {
+    id: "1", 
+    image: "/smartphones.jpg",
+  },
+  {
+    id: "2",
+    image: "path/to/image2.jpg",
+  },
+  {
+    id: "3",
+    image: "path/to/image3.jpg",
+  },
+];
+
 export const blogs = [
   {
     id: 1,

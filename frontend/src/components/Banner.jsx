@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
@@ -33,8 +33,9 @@ const Banner = () => {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }}
-        modules={[Navigation]}
-        className=' h-80 md:h-[70vh] relative'>
+        autoplay={{delay: 4000}}
+        modules={[Navigation, Autoplay]}
+        className=' h-80 md:h-[72vh] relative'>
         {slides.map((slide, index) => (
           <SwiperSlide
             key={index}

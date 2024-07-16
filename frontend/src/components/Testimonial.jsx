@@ -40,7 +40,7 @@ const CustomerReviews = () => {
 
   return (
     <div className="bg-white">
-    <div className='container mx-auto p-5 px-4 my-8'>
+    <div className='container mx-auto p-5 px-4 mb-8'>
       <h1 className='title text-3xl mt-8 mb-10 font-bold uppercase text-center text-blue-500'>
         Customers Reviews
       </h1>

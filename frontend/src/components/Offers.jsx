@@ -21,8 +21,11 @@ const Offers = () => {
   ];
 
   return (
-    <div className='container mx-auto pb-10'>
-      <h1  className='title text-3xl mt-8 mb-10 font-bold uppercase text-center text-blue-500'>Special Offers</h1>
+    <div
+      className='container mx-auto pb-10'>
+      <h1 className='title text-3xl mt-8 mb-10 font-bold uppercase text-center text-blue-500'>
+        Exclusive Offers
+      </h1>
       <div className='flex flex-wrap justify-center gap-8'>
         <OfferCard
           title='Basic'

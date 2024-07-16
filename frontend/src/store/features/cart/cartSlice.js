@@ -9,7 +9,7 @@ const loadStateFromLocalStorage = () => {
       };
     }
 
-    return JSON.parse(cartData); // this line load cart items from local storage if items present there
+    return JSON.parse(cartData);
   } catch (error) {
     console.log("Error while loading cart items", error);
     return {
@@ -35,9 +35,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const existingItem = state.items.find((i) => {
-        return i.productId == item.productId;
-      });
+      const existingItem = state.items.find((i) => i.productId === item.productId);
 
       if (existingItem) {
         existingItem.quantity += item.quantity;
@@ -49,23 +47,25 @@ const cartSlice = createSlice({
 
     removeFromCart: (state, action) => {
       const itemId = action.payload;
-      state.items = state.items.filter((item) => {
-        return item.productId !== itemId;
-      });
+      state.items = state.items.filter((item) => item.productId !== itemId);
       saveStateIntoLocalStorage(state);
     },
 
     updateQuantity: (state, action) => {
       const { productId, quantity } = action.payload;
-      const existingItem = state.items.find((item) => {
-        return item.productId == productId;
-      });
+      const existingItem = state.items.find((item) => item.productId === productId);
       if (existingItem) {
         existingItem.quantity = quantity;
       }
       saveStateIntoLocalStorage(state);
     },
+
+    clearCart: (state) => {
+      state.items = [];
+      saveStateIntoLocalStorage(state);
+    },
   },
 });
-export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
+
+export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -20,7 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { logout } from "@/store/features/auth/authSlice";
 import { Input } from "./ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { clearCart } from "@/store/features/cart/cartSlice";
 
 const Navbar = () => {
   const navItems = ["Home", "Shop", "Blog", "Contact"];
@@ -29,10 +30,14 @@ const Navbar = () => {
   const user = useSelector((state) => state.auth.user?.user);
   const cartItems = useSelector((state) => state.cart.items);
 
-  const searchInput = useLocation();
-  const URLSearch = new URLSearchParams(searchInput?.search);
-  const searchQuery = URLSearch.getAll("q");
-  const [search, setSearch] = useState(searchQuery);
+  const location = useLocation();
+  const URLSearch = new URLSearchParams(location.search);
+  const initialSearchQuery = URLSearch.get("q") || "";
+  const [search, setSearch] = useState(initialSearchQuery);
+
+  useEffect(() => {
+    setSearch(initialSearchQuery);
+  }, [initialSearchQuery]);
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -46,6 +51,7 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    dispatch(clearCart());
     dispatch(logout())
       .unwrap()
       .then((res) => {

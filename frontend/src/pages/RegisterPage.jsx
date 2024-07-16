@@ -52,13 +52,12 @@ const RegisterPage = () => {
     validationSchema: validationSchema,
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       const { ...filteredValues } = values;
       dispatch(register(filteredValues))
         .unwrap()
         .then((res) => {
           if (res?.success === true) {
-            resetForm();
             toast.success(res?.message, { autoClose: 1000 });
             setTimeout(() => {
               navigate("/login");

@@ -2,10 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "./ui/card";
 import { Eye, Fullscreen } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToCart } from "@/store/features/cart/cartSlice";
+import { ShoppingCart } from "lucide-react";
 
 const ProductCard = ({ prod }) => {
   const [showModal, setShowModal] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const dispatch = useDispatch();
+
+  // Check if user is authenticated
+  const isAuthenticated = useSelector((state) => state.auth.user);
 
   const handleOpenModal = (e) => {
     e.preventDefault();
@@ -28,12 +36,38 @@ const ProductCard = ({ prod }) => {
     return null;
   }
 
+  const handleAddToCart = () => {
+    // Check if user is authenticated before allowing addition to cart
+    if (!isAuthenticated) {
+      toast.error("Please log in to add items to the cart", {
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        productId: prod._id,
+        title: prod.title,
+        price: prod.price,
+        pictureUrl: prod.picture?.secure_url,
+        quantity: 1,
+      })
+    );
+    toast.success("Item added to cart successfully", { autoClose: 1000 });
+  };
+
+  // Function to truncate description
+  const truncateDescription = (text, maxLength) => {
+    if (text.length <= maxLength) return text;
+    return text.substr(0, maxLength) + "...";
+  };
+
   return (
     <div
       className='border rounded-lg shadow-md relative cursor-pointer'
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+      onMouseLeave={() => setIsHovered(false)}>
       <Card className='rounded-lg w-full'>
         <CardContent className='grid gap-3'>
           {prod.picture && (
@@ -56,16 +90,14 @@ const ProductCard = ({ prod }) => {
           <div
             onClick={handleOpenModal}
             className='py-2 px-4 text-blue-400 rounded-full cursor-pointer hover:text-blue-500'
-            title='Quick View'
-          >
+            title='Quick View'>
             <Fullscreen size={30} />
           </div>
 
           <Link to={`/product/${prod._id}`}>
             <div
               className='py-2 px-4 text-blue-400 rounded-full cursor-pointer hover:text-blue-500'
-              title='View Product'
-            >
+              title='View Product'>
               <Eye size={30} />
             </div>
           </Link>
@@ -79,8 +111,7 @@ const ProductCard = ({ prod }) => {
               <h2 className='text-2xl font-bold'>{prod.title}</h2>
               <button
                 onClick={handleCloseModal}
-                className='text-2xl font-semibold'
-              >
+                className='text-2xl font-semibold'>
                 &times;
               </button>
             </div>
@@ -91,10 +122,21 @@ const ProductCard = ({ prod }) => {
                 className='w-full h-64 object-contain mb-2'
               />
             )}
-            <p className='text-gray-800 mt-2 text-[16px]'>{prod.desc}</p>
-            <p className='text-gray-600 mt-3 font-semibold text-lg'>
-              {formatCurrency(prod.price)}
-            </p>
+            <p className='text-gray-800 mt-2 text-[17px]'>{truncateDescription(prod.desc, 100)}</p>
+
+            <div className='flex justify-between mt-3 '>
+              <p className='text-gray-600 font-semibold text-xl'>
+                {formatCurrency(prod.price)}
+              </p>
+
+              <div>
+                <button
+                  className='bg-blue-400 hover:bg-blue-500 text-white py-2 px-3 font-bold uppercase rounded'
+                  onClick={handleAddToCart}>
+                  <ShoppingCart />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

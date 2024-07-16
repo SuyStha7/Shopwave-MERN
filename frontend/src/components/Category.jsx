@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { TailSpin } from "react-loader-spinner";
 import { getAllCategories } from "@/store/features/categories/categoriesSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import "swiper/css";
-import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { catImages } from "@/data"; // Ensure this import is correct
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -51,16 +50,10 @@ const Category = () => {
   };
 
   return (
-    <div className='bg-white'>
-      <div className='container py-6 '>
+    <div className='bg-gray-50'>
+      <div className='container py-6'>
         <Swiper
-          spaceBetween={15}
           slidesPerView={1}
-          navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          }}
-          modules={[Navigation]}
           breakpoints={{
             640: {
               slidesPerView: 2,
@@ -75,25 +68,31 @@ const Category = () => {
           className='mySwiper'>
           {category &&
             category.categories &&
-            category.categories.map((cat) => (
-              <SwiperSlide key={cat._id}>
-                <Link to={`/category/${cat._id}`}>
-                  <div className='border border-gray-300 rounded-full w-28 h-28 flex flex-col items-center justify-center'>
-                    <div className='p-4'></div>
-                    <h2 className='text-lg font-semibold capitalize text-black text-center'>
-                      {capitalizeTwoLetterWords(cat.name)}
-                    </h2>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
+            category.categories.map((cat) => {
+              const catImage = catImages.find((img) => img.id === cat._id);
 
-          <div className='swiper-button-next cursor-pointer text-blue-600'>
-            <ChevronRight className='w-5 h-5' />
-          </div>
-          <div className='swiper-button-prev cursor-pointer text-blue-600'>
-            <ChevronLeft className='w-5 h-5' />
-          </div>
+              return (
+                <SwiperSlide key={cat._id}>
+                  <Link to={`/category/${cat._id}`}>
+                    <div className='relative border border-gray-200 bg-white rounded-full shadow-md w-20 h-20 flex items-center justify-center overflow-hidden group mb-2'>
+                      {catImage && (
+                        <img
+                          src={catImage.image}
+                          alt={capitalizeTwoLetterWords(cat.name)}
+                          className='w-full h-full object-cover'
+                        />
+                      )}
+                      {/* Overlay text */}
+                      <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-500 bg-opacity-50'>
+                        <p className='text-white text-sm text-center'>
+                          {capitalizeTwoLetterWords(cat.name)}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </div>

@@ -25,7 +25,7 @@ const ProductDetails = () => {
   const status = useSelector((state) => state.products.status);
   const error = useSelector((state) => state.products.error);
 
-  //Check if user is authenticated
+  // Check if user is authenticated
   const isAuthenticated = useSelector((state) => state.auth.user);
 
   const handleDecrement = () => {
@@ -126,8 +126,11 @@ const ProductDetails = () => {
           <div className='my-2 flex items-center gap-8'>
             <div className='flex gap-2'>
               <button
-                className='px-2 py-1 bg-gray-300 rounded-md'
-                onClick={handleDecrement}>
+                className={`px-2 py-1 bg-gray-300 rounded-md ${
+                  isAuthenticated ? "" : "cursor-not-allowed opacity-50"
+                }`}
+                onClick={handleDecrement}
+                disabled={!isAuthenticated}>
                 <Minus />
               </button>
               <input
@@ -138,8 +141,11 @@ const ProductDetails = () => {
                 min={1}
               />
               <button
-                className='px-2 py-1 bg-gray-300 rounded-md'
-                onClick={handleIncrement}>
+                className={`px-2 py-1 bg-gray-300 rounded-md ${
+                  isAuthenticated ? "" : "cursor-not-allowed opacity-50"
+                }`}
+                onClick={handleIncrement}
+                disabled={!isAuthenticated}>
                 <Plus />
               </button>
             </div>

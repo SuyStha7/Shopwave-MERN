@@ -42,12 +42,11 @@ const LoginPage = () => {
     validateOnChange: true, // Enable validation on change
     validateOnBlur: true, // Enable validation on blur
     validationSchema: validationSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       dispatch(login(values))
         .unwrap()
         .then((res) => {
           if (res?.success === true) {
-            resetForm();
             toast.success(res?.message, { autoClose: 1000 });
             setTimeout(() => {
               if (res?.role == 1) {

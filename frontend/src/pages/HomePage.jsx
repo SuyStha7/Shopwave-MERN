@@ -5,6 +5,7 @@ import Testimonial from "@/components/Testimonial";
 import Newsletter from "@/components/Newsletter";
 import Blog from "@/components/Blog";
 import Offers from "@/components/Offers";
+import SpecialOffers from "@/components/SpecialOffers";
 
 const HomePage = () => {
   return (
@@ -12,6 +13,7 @@ const HomePage = () => {
       <Category />
       <Banner />
       <FeaturedProducts />
+      <SpecialOffers />
       <Testimonial />
       <Offers />
       <Blog />

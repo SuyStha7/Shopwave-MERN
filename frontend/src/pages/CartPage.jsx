@@ -1,5 +1,5 @@
 import { Minus, Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,10 +9,23 @@ import {
 import { toast } from "react-toastify";
 import formatNumber from "format-number";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
+  const user = useSelector((state) => state.auth.user?.user);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return null;
+  }
 
   const handleChangeQuantity = (productId, quantity) => {
     if (quantity < 1) return;
@@ -24,10 +37,10 @@ const CartPage = () => {
     toast.info("Item removed from cart successfully", { autoClose: 1000 });
   };
 
-  const subtotal = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, 0);
-
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   const deliveryCharge = 100;
   const discountRate = 0.1;
   const discount = subtotal * discountRate;
@@ -56,8 +69,8 @@ const CartPage = () => {
     <div className='min-h-screen bg-gray-100 py-10'>
       <div className='container mx-auto px-4'>
         <div className='flex flex-col md:flex-row gap-8'>
-          <div className='w-full md:w-2/3 flex flex-col gap-3 bg-white rounded-lg shadow-lg p-6'>
-            <div className='flex items-center justify-between font-semibold '>
+          <div className='w-full md:w-2/3 flex flex-col gap-3 bg-white rounded-lg shadow-lg p-6 lg:h-[350px]'>
+            <div className='flex items-center justify-between font-semibold'>
               <h1 className='text-3xl py-5'>Your Cart Items</h1>
               <p className='text-gray-800 text-[18px]'>
                 You have{" "}
@@ -130,7 +143,7 @@ const CartPage = () => {
               Purchase Details
             </h1>
             <div className='text-lg'>
-              <p className='text-gray-700 font-medium '>
+              <p className='text-gray-700 font-medium'>
                 Please review your cart before proceeding to checkout. Delivery
                 charges and discounts will be applied during checkout.
               </p>

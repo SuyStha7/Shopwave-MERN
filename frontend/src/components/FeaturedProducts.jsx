@@ -57,8 +57,8 @@ const FeaturedProducts = () => {
       <div className='text-center mt-8'>
         <Link
           to='/shop'
-          className='bg-blue-400 hover:bg-blue-500 text-white font-bold py-3 px-4 my-8 uppercase rounded'>
-          See More
+          className='bg-blue-400 hover:bg-blue-500 text-white font-bold py-3 px-4 my-10 uppercase rounded'>
+          View More
         </Link>
       </div>
     </div>
