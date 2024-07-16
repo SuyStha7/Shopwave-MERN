@@ -35,7 +35,7 @@ const Banner = () => {
         }}
         autoplay={{delay: 4000}}
         modules={[Navigation, Autoplay]}
-        className=' h-80 md:h-[72vh] relative'>
+        className=' h-80 md:h-[90vh] relative'>
         {slides.map((slide, index) => (
           <SwiperSlide
             key={index}

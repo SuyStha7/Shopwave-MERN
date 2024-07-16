@@ -6,6 +6,7 @@ import {
   allUsersController,
 } from "../controllers/userController.js";
 import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
+import { forgetPassword } from "../helper/userHelper.js";
 
 const userRouter = express.Router();
 
@@ -17,6 +18,12 @@ userRouter.post("/login", loginController);
 
 // {{baseUrl}}/users/logout
 userRouter.get("/logout", logoutController);
+
+// {{baseUrl}}/users/forget-password
+userRouter.post("/forget-password", forgetPassword);
+
+// {{baseUrl}}/users/reset-password
+// userRouter.post("/reset-password", resetPassword);
 
 // Admin routes
 // {{baseUrl}}/users/all-users

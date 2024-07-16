@@ -1,17 +1,16 @@
 import axios from "axios";
 
-// use this function in authSlice.js => createAsyncThunk
 const registerUser = async (inputValues) => {
   try {
-    const axiosResponse = await axios.post(
+    const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/users/register`,
       inputValues,
       {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true, //axios send automatically cookies when we apply this property
+        withCredentials: true,
       }
     );
-    return axiosResponse.data;
+    return response.data;
   } catch (error) {
     const errorMessage =
       error.response?.data?.message ||
@@ -21,17 +20,19 @@ const registerUser = async (inputValues) => {
   }
 };
 
+// Login User
 const loginUser = async (inputValues) => {
   try {
-    const axiosResponse = await axios.post(
+    const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/users/login`,
       inputValues,
       {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true, //axios send automatically cookies when we apply this property
+        withCredentials: true,
       }
     );
-    return axiosResponse.data;
+    window.localStorage.setItem("user", JSON.stringify(response.data));
+    return response.data;
   } catch (error) {
     const errorMessage =
       error.response?.data?.message ||
@@ -41,16 +42,18 @@ const loginUser = async (inputValues) => {
   }
 };
 
+// Logout User
 const logoutUser = async () => {
   try {
-    const axiosResponse = await axios.get(
+    const response = await axios.get(
       `${import.meta.env.VITE_BASE_URL}/users/logout`,
       {
         headers: { "Content-Type": "application/json" },
-        withCredentials: true, //axios send automatically cookies when we apply this property
+        withCredentials: true,
       }
     );
-    return axiosResponse.data;
+    window.localStorage.removeItem("user");
+    return response.data;
   } catch (error) {
     const errorMessage =
       error.response?.data?.message ||
@@ -60,16 +63,17 @@ const logoutUser = async () => {
   }
 };
 
+// Get All Users
 const getAllUser = async () => {
   try {
-    const axiosResponse = await axios.get(
+    const response = await axios.get(
       `${import.meta.env.VITE_BASE_URL}/users/all-users`,
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       }
     );
-    return axiosResponse.data;
+    return response.data;
   } catch (error) {
     const errorMessage =
       error.response?.data?.message ||
@@ -79,6 +83,33 @@ const getAllUser = async () => {
   }
 };
 
-const authService = { loginUser, registerUser, logoutUser, getAllUser };
+// Send Password Reset Email
+const sendPasswordResetEmail = async (email) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/forgot-password`,
+      { email },
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    const errorMessage =
+      error.response?.data?.message ||
+      error.message ||
+      "Failed to send reset email.";
+    return Promise.reject(errorMessage);
+  }
+};
+
+const authService = {
+  loginUser,
+  registerUser,
+  logoutUser,
+  getAllUser,
+  sendPasswordResetEmail,
+};
 
 export default authService;

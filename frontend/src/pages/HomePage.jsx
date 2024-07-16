@@ -1,6 +1,6 @@
 import FeaturedProducts from "../components/FeaturedProducts";
 import Banner from "../components/Banner";
-import Category from "../components/Category";
+// import Category from "../components/Category";
 import Testimonial from "@/components/Testimonial";
 import Newsletter from "@/components/Newsletter";
 import Blog from "@/components/Blog";
@@ -10,7 +10,7 @@ import SpecialOffers from "@/components/SpecialOffers";
 const HomePage = () => {
   return (
     <div className='m-h-screen bg-gray-100 pb-10'>
-      <Category />
+      {/* <Category /> */}
       <Banner />
       <FeaturedProducts />
       <SpecialOffers />

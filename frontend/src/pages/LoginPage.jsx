@@ -104,11 +104,21 @@ const LoginPage = () => {
 
               {/* password */}
               <div className='grid gap-2'>
-                <Label
-                  htmlFor='password'
-                  className='text-[16px] uppercase'>
-                  Password
-                </Label>
+                <div className='flex justify-between items-center'>
+                  <Label
+                    htmlFor='password'
+                    className='text-[16px] uppercase'>
+                    Password
+                  </Label>
+
+                  <Link to='/forget-password'>
+                    <div className='text-[16px]'>
+                      <button className='underline text-blue-500'>
+                        Forgot Password?
+                      </button>
+                    </div>
+                  </Link>
+                </div>
                 <div className='relative'>
                   <Input
                     id='password'
@@ -139,8 +149,8 @@ const LoginPage = () => {
               <Button
                 type='submit'
                 className='bg-blue-400 text-white text-lg px-4 py-6 uppercase hover:bg-blue-500 rounded flex items-center justify-center'
-                disabled={status == "loading" ? true : false}>
-                {status == "loading" ? "Signing in...." : "Sign in"}
+                disabled={status === "loading"}>
+                {status === "loading" ? "Signing in...." : "Sign in"}
               </Button>
             </div>
           </form>

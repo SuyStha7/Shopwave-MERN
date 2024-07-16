@@ -19,11 +19,11 @@ const Category = () => {
 
   if (status === "loading") {
     return (
-      <div className='flex justify-center items-center h-full'>
+      <div className='flex justify-center items-center h-full py-12'>
         <TailSpin
           visible={true}
-          height='100'
-          width='100'
+          height='50'
+          width='50'
           color='#000'
           ariaLabel='tail-spin-loading'
           radius='1'

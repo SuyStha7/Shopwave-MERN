@@ -48,7 +48,7 @@ const CartPage = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center h-[80vh] mb-20'>
         <p className='text-3xl text-center flex flex-col gap-5'>
           Your cart is empty <br />
           <Link
@@ -138,7 +138,7 @@ const CartPage = () => {
             ))}
           </div>
 
-          <div className='w-full md:w-1/3 flex flex-col gap-5 bg-white p-6 rounded-lg shadow-lg h-[430px]'>
+          <div className='w-full md:w-1/3 flex flex-col gap-5 bg-white p-6 rounded-lg shadow-lg h-[450px]'>
             <h1 className='text-[28px] font-semibold text-center'>
               Purchase Details
             </h1>

@@ -51,6 +51,22 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
+// Send password reset email thunk
+export const sendPasswordResetEmail = createAsyncThunk(
+  "auth/sendPasswordResetEmail",
+  async ({ token, newPassword }, thunkAPI) => {
+    try {
+      const response = await authService.sendPasswordResetEmail(
+        token,
+        newPassword
+      );
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const getUserDataFromLocalStorage = window.localStorage.getItem("user")
   ? JSON.parse(window.localStorage.getItem("user"))
   : null;
@@ -120,6 +136,20 @@ const authSlice = createSlice({
         state.user = null;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+
+      // send password reset email
+      .addCase(sendPasswordResetEmail.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(sendPasswordResetEmail.fulfilled, (state) => {
+        state.status = "succeeded";
+        state.user = null;
+      })
+      .addCase(sendPasswordResetEmail.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

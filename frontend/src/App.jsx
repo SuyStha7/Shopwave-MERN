@@ -17,6 +17,7 @@ import ProfilePage from "./pages/ProfilePage";
 import CheckoutPage from "./pages/CheckoutPage";
 import RegisterPage from "./pages/RegisterPage";
 import SearchProductPage from "./pages/SearchProductPage";
+import ForgetPasswordPage from "./pages/ForgetPasswordPage";
 
 import BlogDetails from "./components/BlogDetails";
 import CategoryDetails from "./components/CategoryDetails";
@@ -38,7 +39,9 @@ const isAdminUser = true;
 const App = () => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
-  const isAuthPage = ["/login", "/register"].includes(location.pathname);
+  const isAuthPage = ["/login", "/register", "/forget-password"].includes(
+    location.pathname
+  );
 
   useEffect(() => {
     if (isAuthenticated && isAdminUser && location.pathname === "/login") {
@@ -53,11 +56,13 @@ const App = () => {
     window.scrollTo(0, 0);
   }, [location]);
 
-  return (
-    <div className='tracking-wider'>
-      {!isAdmin && !isAuthPage && <Navbar />}
+  // Determine if current route is ForgetPasswordPage
+  const isForgetPasswordPage = location.pathname === "/forget-password";
 
-      {/* normal routes */}
+  return (
+    <div className='tracking-widest'>
+      {!isAdmin && !isAuthPage && !isForgetPasswordPage && <Navbar />}
+
       <Routes>
         <Route
           path='/login'
@@ -66,6 +71,10 @@ const App = () => {
         <Route
           path='/register'
           element={<RegisterPage />}
+        />
+        <Route
+          path='/forget-password'
+          element={<ForgetPasswordPage />}
         />
         <Route
           path='/search'
@@ -112,7 +121,6 @@ const App = () => {
           element={<ProfilePage />}
         />
 
-        {/* admin route */}
         <Route
           path='/admin'
           element={<DashboardLayout />}>
@@ -151,7 +159,7 @@ const App = () => {
         </Route>
       </Routes>
 
-      {!isAdmin && !isAuthPage && <Footer />}
+      {!isAdmin && !isAuthPage && !isForgetPasswordPage && <Footer />}
 
       <ToastContainer position='bottom-right' />
     </div>

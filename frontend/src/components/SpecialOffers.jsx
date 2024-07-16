@@ -1,5 +1,3 @@
-
-
 const SpecialOffers = () => {
   return (
     <div className='bg-white mt-12'>
@@ -7,11 +5,12 @@ const SpecialOffers = () => {
         <img
           src='/specialOffers.jpg' // Replace with your image path
           alt='banner'
-          className='w-full h-[480px] object-fill'
+          className='w-full h-[600px] object-fill'
         />
-        <div className='absolute inset-0 flex items-center justify-center text-white'>
-          <h1 className='text-4xl md:text-6xl font-bold text-center'>
-            Special Offers
+        <div className='absolute inset-0 flex items-center justify-center text-white mx-24'>
+          <h1 className='text-xl md:text-5xl font-bold text-center leading-6'>
+            Get 15% off all models of the iPhone 13 and enjoy a 20% discount on
+            the Samsung Galaxy S21 series.
           </h1>
         </div>
       </div>
