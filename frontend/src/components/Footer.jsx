@@ -80,9 +80,9 @@ const Footer = () => {
           <div className='w-full md:w-1/4 mb-6 md:mb-0'>
             <h2 className='text-xl font-bold mb-4'>Contact Us</h2>
             <ul>
-              <li className='mb-2'>Email: shopwave@gmail.com</li>
+              <li className='mb-2'>Email: techbazaar@gmail.com</li>
               <li className='mb-2'>Phone: 01-4431290</li>
-              <li className='mb-2'>Address: Kalanki, Kathmandu</li>
+              <li className='mb-2'>Address: Pokhara, Kathmandu</li>
             </ul>
           </div>
 
@@ -116,7 +116,7 @@ const Footer = () => {
 
         <div className='mt-4 text-center'>
           <p>
-            &copy; {new Date().getFullYear()} TechBazzar. All rights reserved.
+            &copy; {new Date().getFullYear()} TechBazaar. All rights reserved.
           </p>
         </div>
       </div>
