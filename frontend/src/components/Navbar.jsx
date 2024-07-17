@@ -87,7 +87,7 @@ const Navbar = () => {
               className='flex items-center gap-2 text-lg font-semibold'>
               <Package2 className='h-6 w-6' />
               <span className='font-bold uppercase hover:text-blue-400'>
-                Techbazar
+                Techbazzar
               </span>
             </Link>
             {navItems.map((item, index) => (
@@ -110,7 +110,7 @@ const Navbar = () => {
             className='flex items-center gap-2 text-lg font-semibold md:text-xl'>
             <Package2 className='h-6 w-6' />
             <span className='font-bold uppercase hover:text-blue-400 md:hidden lg:block'>
-              Techbazar
+              Techbazzar
             </span>
           </Link>
         </div>

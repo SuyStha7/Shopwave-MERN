@@ -15,6 +15,10 @@ const categoriesSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    products: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product"
+    }]
   },
   { timestamps: true }
 );

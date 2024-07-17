@@ -82,7 +82,7 @@ const Footer = () => {
             <ul>
               <li className='mb-2'>Email: shopwave@gmail.com</li>
               <li className='mb-2'>Phone: 01-4431290</li>
-              <li className='mb-2'>Address: Hattigauda, Kathmandu</li>
+              <li className='mb-2'>Address: Kalanki, Kathmandu</li>
             </ul>
           </div>
 
@@ -116,7 +116,7 @@ const Footer = () => {
 
         <div className='mt-4 text-center'>
           <p>
-            &copy; {new Date().getFullYear()} Shopwave. All rights reserved.
+            &copy; {new Date().getFullYear()} TechBazzar. All rights reserved.
           </p>
         </div>
       </div>
