@@ -1,6 +1,6 @@
 import FeaturedProducts from "../components/FeaturedProducts";
 import Banner from "../components/Banner";
-import Category from "../components/Category";
+// import Category from "../components/Category";
 import Testimonial from "@/components/Testimonial";
 import Newsletter from "@/components/Newsletter";
 import Blog from "@/components/Blog";
