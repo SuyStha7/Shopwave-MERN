@@ -10,7 +10,7 @@ import SpecialOffers from "@/components/SpecialOffers";
 const HomePage = () => {
   return (
     <div className='m-h-screen bg-gray-100 pb-10'>
-      <Category />
+      {/* <Category /> */}
       <Banner />
       <FeaturedProducts />
       <SpecialOffers />
