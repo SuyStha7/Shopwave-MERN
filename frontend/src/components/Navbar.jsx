@@ -1,7 +1,7 @@
 import {
   CircleUserRound,
   Menu,
-  Package2,
+  Webhook,
   Search,
   ShoppingCart,
 } from "lucide-react";
@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 import { logout } from "@/store/features/auth/authSlice";
 import { Input } from "./ui/input";
 import { useState, useEffect } from "react";
-import { clearCart } from "@/store/features/cart/cartSlice";
+import { saveCart } from "../store/features/cart/cartSlice";
 
 const Navbar = () => {
   const navItems = ["Home", "Shop", "Blog", "Contact"];
@@ -51,20 +51,21 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    dispatch(clearCart());
-    dispatch(logout())
-      .unwrap()
-      .then((res) => {
-        if (res?.success === true) {
-          toast.success(res?.message, { autoClose: 1000 });
-          navigate("/");
-        } else {
-          toast.error(res?.message, { autoClose: 1000 });
-        }
-      })
-      .catch((err) => {
-        toast.error(err.message, { autoClose: 1000 });
-      });
+    dispatch(saveCart(cartItems)).then(() => {
+      dispatch(logout())
+        .unwrap()
+        .then((res) => {
+          if (res?.success === true) {
+            toast.success(res?.message, { autoClose: 1000 });
+            navigate("/");
+          } else {
+            toast.error(res?.message, { autoClose: 1000 });
+          }
+        })
+        .catch((err) => {
+          toast.error(err.message, { autoClose: 1000 });
+        });
+    });
   };
 
   return (
@@ -76,7 +77,7 @@ const Navbar = () => {
             variant='outline'
             size='icon'
             className='shrink-0 md:hidden'>
-            <Menu className='h-5 w-5' />
+            <Menu className='h-8 w-8' />
             <span className='sr-only'>Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
@@ -85,7 +86,7 @@ const Navbar = () => {
             <Link
               to='/'
               className='flex items-center gap-2 text-lg font-semibold'>
-              <Package2 className='h-6 w-6' />
+              <Webhook className='h-6 w-6' />
               <span className='font-bold uppercase hover:text-blue-400'>
                 Techbazaar
               </span>
@@ -108,7 +109,7 @@ const Navbar = () => {
           <Link
             to='/'
             className='flex items-center gap-2 text-lg font-semibold md:text-xl'>
-            <Package2 className='h-6 w-6' />
+            <Webhook className='h-6 w-6' />
             <span className='font-bold uppercase hover:text-blue-400 md:hidden lg:block'>
               Techbazaar
             </span>

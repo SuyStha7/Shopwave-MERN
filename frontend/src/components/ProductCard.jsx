@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "./ui/card";
-import { Eye, Fullscreen } from "lucide-react";
+import { Eye, Fullscreen, Heart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "@/store/features/cart/cartSlice";
+import {
+  addToWishlist,
+} from "@/store/features/wishlist/wishlistSlice"; // Import wishlist actions
 import { ShoppingCart } from "lucide-react";
 import formatNumber from "format-number";
 
@@ -30,7 +33,6 @@ const ProductCard = ({ prod }) => {
   }
 
   const handleAddToCart = () => {
-    // Check if user is authenticated before allowing addition to cart
     if (!isAuthenticated) {
       toast.error("Please log in to add items to the cart", {
         autoClose: 1000,
@@ -50,7 +52,24 @@ const ProductCard = ({ prod }) => {
     toast.success("Item added to cart successfully", { autoClose: 1000 });
   };
 
-  // Function to truncate description
+  const handleToggleWishlist = () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to add items to the wishlist", {
+        autoClose: 1000,
+      });
+      return;
+    }
+    dispatch(
+      addToWishlist({
+        productId: prod._id,
+        title: prod.title,
+        price: prod.price,
+        pictureUrl: prod.picture?.secure_url,
+      })
+    );
+    toast.info("Added to wishlist", { autoClose: 1000 });
+  };
+
   const truncateDescription = (text, maxLength) => {
     if (text.length <= maxLength) return text;
     return text.substr(0, maxLength) + "...";
@@ -80,11 +99,20 @@ const ProductCard = ({ prod }) => {
 
       {isHovered && (
         <div className='absolute top-2 right-2 flex flex-col gap-20'>
-          <div
-            onClick={handleOpenModal}
-            className='py-2 px-4 text-blue-400 rounded-full cursor-pointer hover:text-blue-500'
-            title='Quick View'>
-            <Fullscreen size={30} />
+          <div className='flex flex-col'>
+            <div
+              onClick={handleOpenModal}
+              className='py-2 px-4 text-blue-400 rounded-full cursor-pointer hover:text-blue-500'
+              title='Quick View'>
+              <Fullscreen size={30} />
+            </div>
+
+            <div
+              className='py-2 px-4 text-blue-400 rounded-full cursor-pointer hover:text-blue-500'
+              onClick={handleToggleWishlist}
+              title='Toggle Wishlist'>
+              <Heart size={30} />
+            </div>
           </div>
 
           <Link to={`/product/${prod._id}`}>
@@ -115,11 +143,13 @@ const ProductCard = ({ prod }) => {
                 className='w-full h-64 object-contain mb-2'
               />
             )}
-            <p className='text-gray-800 mt-2 text-[17px]'>{truncateDescription(prod.desc, 100)}</p>
+            <p className='text-gray-800 mt-2 text-[17px]'>
+              {truncateDescription(prod.desc, 100)}
+            </p>
 
             <div className='flex justify-between mt-3 '>
               <p className='text-gray-600 font-semibold text-xl'>
-                {formatNumber({prefix: "Rs."})(prod.price)}
+                {formatNumber({ prefix: "Rs." })(prod.price)}
               </p>
 
               <div>

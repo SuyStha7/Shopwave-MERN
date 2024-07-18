@@ -94,7 +94,7 @@ export default function DashboardLayout() {
               to='/'
               className='flex items-center gap-2 font-semibold'>
               <Webhook className='h-6 w-6' />
-              <span className='text-xl'>Shopwave</span>
+              <span className='text-xl uppercase'>Techbazaar</span>
             </Link>
           </div>
           <div className='flex-1'>
@@ -150,7 +150,7 @@ export default function DashboardLayout() {
                   to='/'
                   className='flex items-center gap-2 text-lg font-semibold'>
                   <Webhook className='h-10 w-10' />
-                  <span className='sr-only'>Shopwave</span>
+                  <span className='sr-only'>Techbazaar</span>
                 </Link>
                 <NavItem
                   to='/admin'

@@ -23,14 +23,10 @@ app.use(cookieParser());
 import userRouter from "./routes/userRoutes.js";
 import categoriesRouter from "./routes/categoriesRoutes.js";
 import productsRouter from "./routes/productsRoutes.js";
-import orderRouter from "./routes/orderRoutes.js";
-import paymentRouter from "./routes/paymentRoutes.js";
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/categories", categoriesRouter);
 app.use("/api/v1/products", productsRouter);
-app.use("/api/v1/orders", orderRouter);
-app.use("/api/v1/payment", paymentRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

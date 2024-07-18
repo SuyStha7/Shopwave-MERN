@@ -4,6 +4,8 @@ import {
   loginController,
   logoutController,
   allUsersController,
+  saveToCart,
+  getFromCart,
 } from "../controllers/userController.js";
 import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
 import { forgetPassword } from "../helper/userHelper.js";
@@ -18,6 +20,13 @@ userRouter.post("/login", loginController);
 
 // {{baseUrl}}/users/logout
 userRouter.get("/logout", logoutController);
+
+//{{baseUrl}}/users/cart
+userRouter.post("/cart", saveToCart);
+
+//{{baseUrl}}/users/cart/:id
+userRouter.post("/cart/:id", getFromCart);
+
 
 // {{baseUrl}}/users/forget-password
 userRouter.post("/forget-password", forgetPassword);

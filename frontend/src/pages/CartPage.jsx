@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   removeFromCart,
   updateQuantity,
-} from "@/store/features/cart/cartSlice";
+  loadCart,
+  saveCart,
+} from "../store/features/cart/cartSlice.js";
 import { toast } from "react-toastify";
 import formatNumber from "format-number";
 import { Button } from "@/components/ui/button";
@@ -18,10 +20,12 @@ const CartPage = () => {
   const user = useSelector((state) => state.auth.user?.user);
 
   useEffect(() => {
-    if (!user) {
+    if (user) {
+      dispatch(loadCart(user._id));
+    } else {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [user, dispatch, navigate]);
 
   if (!user) {
     return null;
@@ -34,6 +38,7 @@ const CartPage = () => {
 
   const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
+    dispatch(saveCart(cartItems));
     toast.info("Item removed from cart successfully", { autoClose: 1000 });
   };
 

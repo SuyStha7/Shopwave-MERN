@@ -32,6 +32,7 @@ import Categories from "./pages/Admin/Categories";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import UpdateCategory from "./pages/Admin/UpdateCategory";
 import DashboardLayout from "./pages/Admin/DashboardLayout";
+import WishlistPage from "./pages/WishlistPage";
 
 const isAuthenticated = true;
 const isAdminUser = true;
@@ -107,6 +108,10 @@ const App = () => {
         <Route
           path='/cart'
           element={<CartPage />}
+        />
+        <Route
+          path='/wishlist'
+          element={<WishlistPage />}
         />
         <Route
           path='/checkout'

@@ -122,9 +122,47 @@ const allUsersController = async (req, res) => {
   }
 };
 
+const saveToCart = async (req, res) => {
+  const { userId, cartItems } = req.body;
+  try {
+    const user = await userModel.findById(userId);
+    if (!user) return res.status(404).send("User not found");
+
+    user.cart = cartItems;
+
+    await user.save();
+    res
+      .status(200)
+      .send({ success: true, message: "Saved cart items successfully" });
+  } catch (error) {
+    console.log(`saveToCart Error: ${error}`);
+    res
+      .status(500)
+      .send({ success: false, message: "Error saving cart items", error });
+  }
+};
+
+const getFromCart = async (req, res) => {
+  try {
+    const user = await userModel
+      .findById(req.params.userId)
+      .populate("cart.productId");
+    if (!user) return res.status(404).send("User not found");
+
+    res.status(200).send(user.cart);
+  } catch (error) {
+    console.log(`getFromCart Error: ${error}`);
+    res
+      .status(500)
+      .send({ success: false, message: "Error fetching cart items", error });
+  }
+};
+
 export {
   registerController,
   loginController,
   logoutController,
   allUsersController,
+  saveToCart,
+  getFromCart,
 };
