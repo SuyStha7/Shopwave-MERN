@@ -12,30 +12,27 @@ import { forgetPassword } from "../helper/userHelper.js";
 
 const userRouter = express.Router();
 
-// {{baseUrl}}/users/register
+// POST {{baseUrl}}/users/register
 userRouter.post("/register", registerController);
 
-// {{baseUrl}}/users/login
+// POST {{baseUrl}}/users/login
 userRouter.post("/login", loginController);
 
-// {{baseUrl}}/users/logout
+// GET {{baseUrl}}/users/logout
 userRouter.get("/logout", logoutController);
 
-//{{baseUrl}}/users/cart
-userRouter.post("/cart", saveToCart);
+// POST {{baseUrl}}/users/cart/:userId
+userRouter.post("/cart/:userId", saveToCart);
 
-//{{baseUrl}}/users/cart/:id
-userRouter.post("/cart/:id", getFromCart);
+// GET {{baseUrl}}/users/cart/:userId
+userRouter.get("/cart/:userId", getFromCart);
 
-
-// {{baseUrl}}/users/forget-password
+// POST {{baseUrl}}/users/forget-password
 userRouter.post("/forget-password", forgetPassword);
 
-// {{baseUrl}}/users/reset-password
-// userRouter.post("/reset-password", resetPassword);
-
 // Admin routes
-// {{baseUrl}}/users/all-users
+
+// GET {{baseUrl}}/users/all-users
 userRouter.get("/all-users", isAuthorized, isAdmin, allUsersController);
 
 export default userRouter;
