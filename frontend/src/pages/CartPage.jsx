@@ -19,13 +19,13 @@ const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const user = useSelector((state) => state.auth.user?.user);
 
-  useEffect(() => {
-    if (user) {
-      dispatch(loadCart(user._id));
-    } else {
-      navigate("/");
-    }
-  }, [user, dispatch, navigate]);
+useEffect(() => {
+  if (user) {
+    dispatch(loadCart(user._id)); 
+  } else {
+    navigate("/");
+  }
+}, [user, dispatch, navigate]);
 
   const handleChangeQuantity = (productId, quantity) => {
     if (quantity < 1) return;

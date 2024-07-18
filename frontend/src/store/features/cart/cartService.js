@@ -4,7 +4,7 @@ const saveCart = async (cartItems, userId) => {
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/cart/${userId}`,
-      { userId, cartItems },
+      { cartItems },
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,

@@ -143,10 +143,9 @@ const saveToCart = async (req, res) => {
 };
 
 const getFromCart = async (req, res) => {
+  const userId = req.params.id;
   try {
-    const user = await userModel
-      .findById(req.params.userId)
-      .populate("cart.productId");
+    const user = await userModel.findById(userId).populate("cart.productId");
     if (!user) return res.status(404).send("User not found");
 
     res.status(200).send(user.cart);
