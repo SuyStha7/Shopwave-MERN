@@ -19,22 +19,35 @@ const CartPage = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const user = useSelector((state) => state.auth.user?.user);
 
-useEffect(() => {
-  if (user) {
-    dispatch(loadCart(user._id)); 
-  } else {
-    navigate("/");
-  }
-}, [user, dispatch, navigate]);
+  useEffect(() => {
+    if (user && user._id) {
+      dispatch(loadCart(user._id));
+    } else {
+      navigate("/");
+    }
+  }, [user, dispatch, navigate]);
 
   const handleChangeQuantity = (productId, quantity) => {
     if (quantity < 1) return;
     dispatch(updateQuantity({ productId, quantity }));
+    dispatch(
+      saveCart({
+        userId: user._id,
+        cartItems: cartItems.map((item) =>
+          item.productId === productId ? { ...item, quantity } : item
+        ),
+      })
+    );
   };
 
   const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
-    dispatch(saveCart({ userId: user._id, cartItems })); // Save cart after removing item
+    dispatch(
+      saveCart({
+        userId: user._id,
+        cartItems: cartItems.filter((item) => item.productId !== productId),
+      })
+    );
     toast.info("Item removed from cart successfully", { autoClose: 1000 });
   };
 
@@ -47,7 +60,7 @@ useEffect(() => {
   const discount = subtotal * discountRate;
   const totalAmount = subtotal + deliveryCharge - discount;
 
-  if (!user) {
+  if (!user || !user._id) {
     return null;
   }
 
@@ -58,8 +71,12 @@ useEffect(() => {
           <div className='flex justify-center items-center h-[80vh] mb-20'>
             <p className='text-3xl text-center flex flex-col gap-5'>
               Your cart is empty <br />
-              <Link to='/shop' className='text-blue-700 text-3xl'>
-                <Button variant='outline' className='border border-gray-400'>
+              <Link
+                to='/shop'
+                className='text-blue-700 text-3xl'>
+                <Button
+                  variant='outline'
+                  className='border border-gray-400'>
                   Continue Shopping
                 </Button>
               </Link>
@@ -94,7 +111,9 @@ useEffect(() => {
                       <span className='font-semibold'>
                         {formatNumber()(item.price)}
                       </span>{" "}
-                      <span className='text-gray-400 text-[15px]'>NPR/Item</span>
+                      <span className='text-gray-400 text-[15px]'>
+                        NPR/Item
+                      </span>
                     </p>
                     <p className='font-semibold text-[16px]'>
                       Total:{" "}
@@ -142,8 +161,9 @@ useEffect(() => {
               </h1>
               <div className='text-lg'>
                 <p className='text-gray-700 font-medium'>
-                  Please review your cart before proceeding to checkout. Delivery
-                  charges and discounts will be applied during checkout.
+                  Please review your cart before proceeding to checkout.
+                  Delivery charges and discounts will be applied during
+                  checkout.
                 </p>
               </div>
               <div className='flex flex-col gap-2'>

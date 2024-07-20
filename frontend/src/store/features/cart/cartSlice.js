@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import cartService from "./cartService.js";
 
+// Load cart state from local storage
 const loadStateFromLocalStorage = () => {
   try {
     const cartData = window.localStorage.getItem("cart");
@@ -18,6 +19,7 @@ const loadStateFromLocalStorage = () => {
   }
 };
 
+// Save cart state to local storage
 const saveStateIntoLocalStorage = (state) => {
   try {
     const cartData = JSON.stringify(state);
@@ -33,8 +35,8 @@ export const saveCart = createAsyncThunk(
   "cart/saveCart",
   async ({ userId, cartItems }, thunkAPI) => {
     try {
-      const response = await cartService.saveCart(cartItems, userId); // Assuming cartService handles API calls
-      return response.data;
+      const response = await cartService.saveCart(cartItems, userId);
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Error saving cart items"
@@ -48,8 +50,8 @@ export const loadCart = createAsyncThunk(
   async (_, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
     try {
-      const response = await cartService.loadCart(user._id); // Assuming cartService handles API calls
-      return response.data;
+      const response = await cartService.loadCart(user._id);
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Error loading cart items"
@@ -60,7 +62,11 @@ export const loadCart = createAsyncThunk(
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState,
+  initialState: {
+    ...initialState,
+    status: "idle",
+    error: null,
+  },
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
@@ -108,7 +114,7 @@ const cartSlice = createSlice({
       })
       .addCase(saveCart.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
       })
       // load cart
       .addCase(loadCart.pending, (state) => {
@@ -121,7 +127,7 @@ const cartSlice = createSlice({
       })
       .addCase(loadCart.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });

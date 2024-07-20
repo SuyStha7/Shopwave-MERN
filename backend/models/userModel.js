@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      default: 0, // 0 means user
+      default: 0, // 0 means user, 1 means admin
     },
     resetPasswordToken: {
       type: String,
@@ -30,12 +30,25 @@ const userSchema = new mongoose.Schema(
     },
     cart: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-        quantity: { type: Number, default: 1 },
+        productId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+          min: 1,
+        },
       },
     ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
+
+// Create an index on email for faster queries
+userSchema.index({ email: 1 });
 
 export default mongoose.model("User", userSchema);

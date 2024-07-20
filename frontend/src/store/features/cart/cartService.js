@@ -3,7 +3,7 @@ import axios from "axios";
 const saveCart = async (cartItems, userId) => {
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/cart/${userId}`,
+      `${import.meta.env.VITE_BASE_URL}/users/cart/${userId}`,
       { cartItems },
       {
         headers: { "Content-Type": "application/json" },
@@ -23,7 +23,7 @@ const saveCart = async (cartItems, userId) => {
 const loadCart = async (userId) => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/cart/${userId}`,
+      `${import.meta.env.VITE_BASE_URL}/users/cart/${userId}`,
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,

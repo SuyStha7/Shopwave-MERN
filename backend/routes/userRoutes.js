@@ -22,10 +22,10 @@ userRouter.post("/login", loginController);
 userRouter.get("/logout", logoutController);
 
 // POST {{baseUrl}}/users/cart/:userId
-userRouter.post("/cart/:id", saveToCart);
+userRouter.post("/cart/:userId", isAuthorized, saveToCart); // Added isAuthorized middleware
 
 // GET {{baseUrl}}/users/cart/:userId
-userRouter.get("/cart/:id", getFromCart);
+userRouter.get("/cart/:userId", isAuthorized, getFromCart); // Added isAuthorized middleware
 
 // POST {{baseUrl}}/users/forget-password
 userRouter.post("/forget-password", forgetPassword);
